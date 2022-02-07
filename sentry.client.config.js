@@ -12,7 +12,7 @@ Sentry.init({
   enabled: process.env.NODE_ENV === "production",
   dsn:
     SENTRY_DSN ||
-    "https://2dbf1c5c806248efa7051b0261376808@o175092.ingest.sentry.io/5827957",
+    "https://1843fd68d2894d9cab539a3037cea34e@o1137987.ingest.sentry.io/6191273",
   denyUrls: [/google-analytics\.com/i],
   /**
    * Note: if you want to override the automatic release value, do not set a
