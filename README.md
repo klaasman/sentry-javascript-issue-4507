@@ -1,34 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# `@sentry/javascript` issue [#4507](https://github.com/getsentry/sentry-javascript/issues/4507)
 
-## Getting Started
+## Steps to reproduce:
 
-First, run the development server:
+1. `npm install`
+2. `npm run build`
+3. inspect the generated \_middleware files inside `.next/server/pages/`.
 
-```bash
-npm run dev
-# or
-yarn dev
+   the output summary already displays the issue:
+
+```
+Page                                       Size     First Load JS
+┌ ○ /                                      5.29 kB         108 kB
+├   └ css/01a22525d00b6870.css             697 B
+├   /_app                                  0 B             102 kB
+├ ƒ /_middleware                           818 B           149 kB
+├ ○ /404                                   240 B           103 kB
+├ ƒ /api/_middleware                       117 kB          264 kB <- not good!
+└ λ /api/hello                             0 B             102 kB
++ First Load JS shared by all              102 kB
+  ├ chunks/framework-a75b8138b571f2ec.js   42.1 kB
+  ├ chunks/main-c3ad17c978de2a08.js        27 kB
+  ├ chunks/pages/_app-ab9eb489e7b110c7.js  32.4 kB
+  ├ chunks/webpack-3d00eb2dff231e11.js     1.02 kB
+  └ css/b4029e5e9f7cc74e.css               238 B
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The `/pages/api/_middleware.js` file is too large and should be identical to `/pages/_middleware.js`.
